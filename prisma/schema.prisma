@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Carpenter {
+  id             String         @id @default(cuid())
+  name           String
+  phone          String
+  city           String
+  zone           String
+  bio            String         @default("")
+  email          String         @unique
+  passwordHash   String
+  services       String         @default("[]")
+  availableDays  String         @default("[]")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  photos         Photo[]
+  requests       VisitRequest[]
+  materials      Material[]
+  planDesigns    PlanDesign[]
+}
+
+model PlanDesign {
+  id          String    @id @default(cuid())
+  carpenterId String
+  carpenter   Carpenter @relation(fields: [carpenterId], references: [id], onDelete: Cascade)
+  name        String
+  payloadJson String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([carpenterId])
+}
+
+model Material {
+  id                  String    @id @default(cuid())
+  carpenterId         String
+  carpenter           Carpenter @relation(fields: [carpenterId], references: [id], onDelete: Cascade)
+  name                String
+  thicknessMm         Int       @default(18)
+  pricePerSheet       Float
+  sheetWidthMm        Int       @default(1220)
+  sheetHeightMm       Int       @default(2440)
+  pricePerLinearMeter Float
+  notes               String    @default("")
+  sortOrder           Int       @default(0)
+  active              Boolean   @default(true)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([carpenterId])
+}
+
+model Photo {
+  id          String    @id @default(cuid())
+  carpenterId String
+  carpenter   Carpenter @relation(fields: [carpenterId], references: [id], onDelete: Cascade)
+  filename    String
+  caption     String    @default("")
+  createdAt   DateTime  @default(now())
+
+  @@index([carpenterId])
+}
+
+model VisitRequest {
+  id          String    @id @default(cuid())
+  carpenterId String
+  carpenter   Carpenter @relation(fields: [carpenterId], references: [id], onDelete: Cascade)
+  clientName  String
+  clientPhone String
+  message     String    @default("")
+  day         String
+  status      String    @default("nueva")
+  createdAt   DateTime  @default(now())
+
+  @@index([carpenterId])
+}

@@ -1,0 +1,32 @@
+{
+  "name": "jacm-carpinteria",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/print-lan-url.mjs && next dev -p 3010 -H 0.0.0.0",
+    "dev:local": "next dev -p 3010",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0",
+    "db:setup": "prisma db push && prisma db seed",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.0",
+    "bcryptjs": "^2.4.3",
+    "next": "^16.1.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.17.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "prisma": "^6.16.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.0"
+  }
+}

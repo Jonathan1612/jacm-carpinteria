@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" aria-label="Cocina integral">
+  <rect width="800" height="600" fill="#0f172a"/>
+  <rect x="80" y="120" width="640" height="360" rx="10" fill="#f7f1e8" stroke="#334155" stroke-width="2"/>
+  <rect x="100" y="240" width="600" height="24" fill="#8d5a32"/>
+  <rect x="110" y="264" width="170" height="200" fill="#d7b48a" stroke="#4e2f1c" stroke-width="4"/>
+  <rect x="300" y="264" width="170" height="200" fill="#c99662" stroke="#4e2f1c" stroke-width="4"/>
+  <rect x="490" y="264" width="170" height="200" fill="#e2c29a" stroke="#4e2f1c" stroke-width="4"/>
+  <circle cx="195" cy="200" r="28" fill="#cbd5e1" stroke="#64748b"/>
+  <circle cx="385" cy="200" r="28" fill="#cbd5e1" stroke="#64748b"/>
+  <circle cx="575" cy="200" r="28" fill="#cbd5e1" stroke="#64748b"/>
+  <text x="56" y="560" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="22">Cocina integral · gabinetes</text>
+</svg>

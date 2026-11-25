@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Clóset empotrado">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="120" y="60" width="560" height="480" rx="12" fill="#8d5a32"/>
+  <rect x="148" y="88" width="504" height="424" rx="6" fill="#f7f1e8"/>
+  <rect x="168" y="108" width="220" height="380" fill="#e2c29a" stroke="#4e2f1c" stroke-width="4"/>
+  <rect x="408" y="108" width="220" height="380" fill="#c99662" stroke="#4e2f1c" stroke-width="4"/>
+  <line x1="298" y1="130" x2="298" y2="468" stroke="#4e2f1c" stroke-width="3"/>
+  <line x1="498" y1="130" x2="498" y2="468" stroke="#4e2f1c" stroke-width="3"/>
+  <line x1="180" y1="200" x2="376" y2="200" stroke="#6a4c34" stroke-width="8"/>
+  <rect x="180" y="320" width="170" height="60" fill="#d7b48a" stroke="#4e2f1c" stroke-width="3"/>
+  <rect x="180" y="390" width="170" height="60" fill="#d7b48a" stroke="#4e2f1c" stroke-width="3"/>
+  <text x="56" y="560" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="22">Clóset a medida · vista frontal</text>
+</svg>

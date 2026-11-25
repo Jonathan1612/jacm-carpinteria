@@ -1,0 +1,47 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/jonathan1612/jacm-carpinteria:latest
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: file:/app/prisma/prod.db
+      AUTH_SECRET: ${AUTH_SECRET:?AUTH_SECRET es obligatorio en .env del servidor}
+      SHOP_EMAIL: ${SHOP_EMAIL:-taller@jacm-carpinteria.local}
+      RUN_DB_SEED: ${RUN_DB_SEED:-false}
+    volumes:
+      - jacm_carpinteria_db:/app/prisma
+      - jacm_carpinteria_uploads:/app/data/uploads
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.jacm-carpinteria-http.entrypoints=http"
+      - "traefik.http.routers.jacm-carpinteria-http.rule=Host(`${FRONTEND_DOMAIN}`) && !PathPrefix(`/.well-known/acme-challenge/`)"
+      - "traefik.http.routers.jacm-carpinteria-http.middlewares=https-redirect@file"
+      - "traefik.http.routers.jacm-carpinteria.entrypoints=https"
+      - "traefik.http.routers.jacm-carpinteria.rule=Host(`${FRONTEND_DOMAIN}`)"
+      - "traefik.http.routers.jacm-carpinteria.tls=true"
+      - "traefik.http.routers.jacm-carpinteria.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.jacm-carpinteria.middlewares=secure-headers@file,rate-limit@file"
+      - "traefik.http.services.jacm-carpinteria.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  jacm_carpinteria_db:
+    driver: local
+  jacm_carpinteria_uploads:
+    driver: local
+
+networks:
+  proxy:
+    external: true

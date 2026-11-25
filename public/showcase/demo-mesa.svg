@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" aria-label="Mesa de comedor">
+  <rect width="800" height="600" fill="#0f172a"/>
+  <ellipse cx="400" cy="320" rx="260" ry="120" fill="#c99662" stroke="#4e2f1c" stroke-width="5"/>
+  <ellipse cx="400" cy="310" rx="250" ry="110" fill="#e2c29a"/>
+  <rect x="220" y="400" width="28" height="140" rx="4" fill="#8d5a32"/>
+  <rect x="552" y="400" width="28" height="140" rx="4" fill="#8d5a32"/>
+  <rect x="374" y="400" width="28" height="140" rx="4" fill="#8d5a32"/>
+  <text x="56" y="560" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="22">Mesa de madera · comedor</text>
+</svg>

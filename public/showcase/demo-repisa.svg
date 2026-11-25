@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" aria-label="Repisas flotantes">
+  <rect width="800" height="600" fill="#0f172a"/>
+  <rect x="140" y="80" width="520" height="440" rx="8" fill="#1e293b" stroke="#334155"/>
+  <rect x="180" y="140" width="440" height="16" fill="#8d5a32"/>
+  <rect x="180" y="230" width="440" height="16" fill="#c99662"/>
+  <rect x="180" y="320" width="440" height="16" fill="#e2c29a"/>
+  <rect x="180" y="410" width="320" height="16" fill="#d7b48a"/>
+  <text x="56" y="560" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="22">Repisas y librero</text>
+</svg>
