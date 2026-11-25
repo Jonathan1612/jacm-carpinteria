@@ -1,41 +1,71 @@
-# Secrets de GitHub para jacm-carpinteria
+# Secrets de GitHub — jacm-carpinteria
 
-Misma idea que **jacm-time-record** y **jacm-portafolio**: el workflow llama a `container-apps/.github/workflows/deploy-app.yml`.
+Configuración **igual que jacm-time-record** para el servidor; **distinto** solo `AUTH_SECRET` (y opcional `SHOP_EMAIL`).
 
-Configuración en el repo **Jonathan1612/jacm-carpinteria** → Settings → Secrets and variables → Actions.
+Repo: https://github.com/Jonathan1612/jacm-carpinteria  
+Donde pegarlos: **Settings → Secrets and variables → Actions → Repository secrets → New repository secret**
 
-## Obligatorios (igual que time-record para el servidor)
+Repo de referencia (copiar los mismos valores que ya funcionan allí):  
+https://github.com/Jonathan1612/jacm-time-record/settings/secrets/actions
 
-| Secret | Qué es | Dónde sacarlo |
-| ------ | ------ | ------------- |
-| `DO_HOST` | IP del VPS | `104.248.126.117` (mismo que time-record) |
-| `DO_USER` | Usuario SSH | El mismo valor que ya tiene **jacm-time-record** |
-| `DO_SSH_KEY` | Clave privada SSH (PEM completa) | La misma que **jacm-time-record** (copiar/pegar el secret entero) |
-| `DO_PORT` | Opcional | `22` si no lo tenías definido |
+> GitHub **no muestra** el valor guardado de un secret. Si no lo tienes guardado en otro sitio, hay que **volver a pegar** el mismo texto que usaste la primera vez (misma clave SSH, mismo usuario, etc.).
 
-## Obligatorio solo para esta app (sesión del administrador)
+---
 
-| Secret | Qué es | Cómo generarlo |
-| ------ | ------ | -------------- |
-| `AUTH_SECRET` | Firma de cookies de login | En terminal: `openssl rand -base64 32` — **nuevo** para carpintería (no reutilices el JWT de time-record) |
+## 1. Los mismos que time-record (copiar el mismo valor)
 
-## Recomendados
+| Nombre del secret | ¿Igual que time-record? | Qué valor poner |
+| ----------------- | ----------------------- | --------------- |
+| `DO_HOST` | Sí, mismo valor | `104.248.126.117` |
+| `DO_USER` | Sí, mismo valor | El usuario SSH con el que entras al VPS (el de time-record; suele ser `root` o el que definiste) |
+| `DO_SSH_KEY` | Sí, mismo archivo/clave | **Todo** el contenido de la **clave privada PEM** que usaste en time-record (`-----BEGIN ... PRIVATE KEY-----` … `-----END ...`) |
+| `DO_PORT` | Sí (si lo tienes allí) | `22` |
 
-| Secret / variable | Qué es |
-| ----------------- | ------ |
-| `SHOP_EMAIL` | Correo del taller en la BD (default seed: `taller@jacm-carpinteria.local`; en prod usa el correo real del carpintero) |
+### Dónde está la clave SSH en tu Mac (si la generaste ahí)
 
-## Los que **no** necesitas (time-record sí)
+Suele ser una de estas (abre el archivo y copia **todo** el texto):
 
-- `JWT_SECRET` — solo backend de time-record (`jwt_required: false` aquí)
-- `MONGO_*` — esta app usa SQLite en volumen Docker
+- `~/.ssh/id_ed25519` (sin `.pub`)
+- `~/.ssh/id_rsa` (sin `.pub`)
+- O el archivo `.pem` que guardaste cuando configuraste deploy por primera vez
 
-## Después del primer deploy
+En terminal (solo para ver el archivo y copiarlo tú):
 
-1. DNS: `carpinteria.jacm.com.mx` → `104.248.126.117`
-2. En el servidor, una vez: en `/opt/apps/jacm-carpinteria/.env` poner `RUN_DB_SEED=true`, `docker compose up -d`, entrar y **cambiar contraseña**
-3. Quitar `RUN_DB_SEED` del `.env`
+```bash
+cat ~/.ssh/id_ed25519
+```
 
-## Copiar secrets desde time-record
+Ese texto completo va en el secret **`DO_SSH_KEY`** de **jacm-carpinteria** (y debe ser el mismo que en time-record).
 
-En GitHub puedes duplicar `DO_HOST`, `DO_USER`, `DO_SSH_KEY`, `DO_PORT` del repo **jacm-time-record** al repo **jacm-carpinteria**. Solo **AUTH_SECRET** debe ser un valor nuevo.
+---
+
+## 2. Solo para carpintería (valor nuevo)
+
+| Nombre | ¿Igual que time-record? | Qué valor poner |
+| ------ | ----------------------- | --------------- |
+| `AUTH_SECRET` | **No** — no uses `JWT_SECRET` | Cadena nueva. En Mac: `openssl rand -base64 32` y pega el resultado |
+
+---
+
+## 3. Opcional
+
+| Nombre | Valor |
+| ------ | ----- |
+| `SHOP_EMAIL` | Correo del carpintero en la app (seed: `taller@jacm-carpinteria.local`; en prod el real). Si no lo pones, el deploy usa el default del compose. |
+
+---
+
+## 4. Lo que **no** debes agregar (time-record sí)
+
+- `JWT_SECRET` — solo API de time-record
+- `MONGO_ROOT_PASSWORD`, `MONGO_APP_PASSWORD`, etc.
+
+---
+
+## 5. Después de guardar los secrets
+
+1. **Actions** → workflow **Deploy** → **Run workflow** (o un push a `main` ya lo dispara).
+2. DNS: `carpinteria.jacm.com.mx` → `104.248.126.117`.
+3. En el servidor: `cd /opt/container-apps && git pull origin dev` (si aún no está actualizado `apps.yml`).
+
+Primer arranque: en el servidor `/opt/apps/jacm-carpinteria/.env` puedes poner una vez `RUN_DB_SEED=true`, redeploy, cambiar contraseña, quitar `RUN_DB_SEED`.
